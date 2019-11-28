@@ -6,27 +6,33 @@ using NUnit.Framework;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Input;
 
-using HelloAT.calc_test;
-
+using HelloAT.pos.forms;
 
 namespace HelloAT
 {
     [TestFixture]
-    public class UnitTest1
+    public class PosFirstTest
     {
         [Test]
-        public void CalcAttachWithAbsoluteExePath()
+        public void test1()
         {
-            using (Application.Attach("calc.exe"))
+            using (Application.Attach("POS.exe"))
             {
-                using (var app = Application./*Launch*/Attach(@"C:\WINDOWS\system32\calc.exe"))
+                using (var app = Application./*Launch*/Attach(@"C:\Program Files (x86)\Microsoft Dynamics AX\60\Retail POS\POS.exe"))
                 {
                     using (var automation = new UIA3Automation())
                     {
                         Window window = app.GetMainWindow(automation);
-                        MainFormCalc mainForm = new MainFormCalc(window);
+                        AuthorizationForm authnForm = new AuthorizationForm(window);
+
+                        string userBrusova = "Виктория Валерьевна Брусова";
+                        string userBorovkova = "Валентина Ивановна Боровкова";
+                        authnForm.loginAsUser(userBorovkova);
 
                         //window.Focus(); //окно на передний план
+                        //DataGridView usersDGV = window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView();
+                        //GridRow brusovaRow = usersDGV.FindFirstByXPath($"//DataItem//Custom[@Name='Виктория Валерьевна Брусова']").FindFirstDescendant().AsGridRow();
+                        //brusovaRow.DoubleClick();
 
                         /*
                         var panel = window.FindFirstByXPath($"//Pane");
@@ -48,15 +54,6 @@ namespace HelloAT
                         buttonEqual.Click();
                         */
 
-                        mainForm.button1.Click();
-                        mainForm.buttonPlus.Click();
-                        mainForm.button2.Click();
-                        mainForm.buttonMultiply.Click();
-                        mainForm.button3.Click();
-                        mainForm.buttonEqual.Click();
-
-
-                        Assert.That(mainForm.textResult.Text.Equals("9"));
 
                         //app.WaitWhileMainHandleIsMissing();
                         //app.Close(); //Закрыть окно

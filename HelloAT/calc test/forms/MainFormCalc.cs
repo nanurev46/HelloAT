@@ -8,7 +8,7 @@ using FlaUI.Core.AutomationElements.PatternElements;
 
 namespace HelloAT.calc_test
 {
-    class MainForm  //Главное окно
+    class MainFormCalc  //Главное окно
     {
 
         public Window window { get; set; }
@@ -33,7 +33,7 @@ namespace HelloAT.calc_test
 
 
 
-        public MainForm (Window window)
+        public MainFormCalc (Window window)
         {
             this.window = window;
             this.window.Focus(); //окно на передний план

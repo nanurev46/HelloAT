@@ -84,13 +84,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="calc test\forms\MainForm.cs" />
+    <Compile Include="calc test\forms\MainFormCalc.cs" />
     <Compile Include="calc test\test\UnitTest1.cs" />
+    <Compile Include="pos\forms\AuthorizationForm.cs" />
+    <Compile Include="pos\test\PosFirstTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
