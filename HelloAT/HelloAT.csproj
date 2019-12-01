@@ -86,7 +86,9 @@
   <ItemGroup>
     <Compile Include="calc test\forms\MainFormCalc.cs" />
     <Compile Include="calc test\test\UnitTest1.cs" />
-    <Compile Include="pos\forms\AuthorizationForm.cs" />
+    <Compile Include="pos\FormElements\DataGridPOS.cs" />
+    <Compile Include="pos\PosObjects\Operator.cs" />
+    <Compile Include="pos\Forms\MainMenu\SelectOperatorForm.cs" />
     <Compile Include="pos\test\PosFirstTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

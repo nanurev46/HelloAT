@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using FlaUI.Core;
 using FlaUI.UIA3;
@@ -7,6 +8,7 @@ using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Input;
 
 using HelloAT.pos.forms;
+using HelloAT.pos.FormElements;
 
 namespace HelloAT
 {
@@ -23,11 +25,17 @@ namespace HelloAT
                     using (var automation = new UIA3Automation())
                     {
                         Window window = app.GetMainWindow(automation);
-                        AuthorizationForm authnForm = new AuthorizationForm(window);
+                        SelectOperatorForm selectOperatorForm = new SelectOperatorForm(window);
 
                         string userBrusova = "Виктория Валерьевна Брусова";
                         string userBorovkova = "Валентина Ивановна Боровкова";
-                        authnForm.loginAsUser(userBorovkova);
+
+                        //DataGridPOS operGrid = new DataGridPOS(window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView());
+                        //List<List<string>> l = operGrid.getRowsAsList();
+                        DataGridPOS operGrid = new DataGridPOS(window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView().BasicAutomationElement);
+
+
+                        //selectOperatorForm.loginByName(userBorovkova);
 
                         //window.Focus(); //окно на передний план
                         //DataGridView usersDGV = window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView();
