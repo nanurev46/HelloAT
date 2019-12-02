@@ -24,6 +24,10 @@ namespace HelloAT.pos.forms
         {
             this.window = window;
             window.Focus();
+
+            operatorsDataGrid = new DataGridPOS(window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView().BasicAutomationElement);
+
+
             /*
             this.operatorsDataGrid = new DataGridPOS (window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView());
             this.listOperators = new List<Operator>();

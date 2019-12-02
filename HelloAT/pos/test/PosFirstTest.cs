@@ -32,7 +32,6 @@ namespace HelloAT
 
                         //DataGridPOS operGrid = new DataGridPOS(window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView());
                         //List<List<string>> l = operGrid.getRowsAsList();
-                        DataGridPOS operGrid = new DataGridPOS(window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView().BasicAutomationElement);
 
 
                         //selectOperatorForm.loginByName(userBorovkova);

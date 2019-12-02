@@ -15,23 +15,11 @@ namespace HelloAT.pos.FormElements
 {
     class DataGridPOS : DataGridView
     {
-        //DataGridView dataGridView;
-
-        public DataGridPOS(BasicAutomationElementBase basicAutomationElement/*, Window window, string xpath*/) : base(basicAutomationElement)
+        public DataGridPOS(BasicAutomationElementBase basicAutomationElement) : base(basicAutomationElement)
         {
-            /*basicAutomationElement = window.FindFirstByXPath($"//Custom//DataGrid").BasicAutomationElement;*/
         }
-        /*
-        public DataGridPOS(BasicAutomationElementBase basicAutomationElement, DataGridView dataGridView) : base(basicAutomationElement)
-        {
-            basicAutomationElement = dataGridView.BasicAutomationElement;
-        }
-
-        public DataGridPOS(BasicAutomationElementBase basicAutomationElement, Grid grid) : base(basicAutomationElement)
-        {
-            basicAutomationElement = grid.BasicAutomationElement;
-        }
-        */
+        
+        
         //
         // Summary:
         //Возвращает строки грида списком
