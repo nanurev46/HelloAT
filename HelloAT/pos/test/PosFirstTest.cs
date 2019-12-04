@@ -27,9 +27,12 @@ namespace HelloAT
                         Window window = app.GetMainWindow(automation);
                         SelectOperatorForm selectOperatorForm = new SelectOperatorForm(window);
 
+                        selectOperatorForm.loginByName("Эльбрус");
+
+                        /*
                         string userBrusova = "Виктория Валерьевна Брусова";
                         string userBorovkova = "Валентина Ивановна Боровкова";
-
+                        */
                         //DataGridPOS operGrid = new DataGridPOS(window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView());
                         //List<List<string>> l = operGrid.getRowsAsList();
 

@@ -17,9 +17,7 @@ namespace HelloAT.pos.FormElements
     {
         public DataGridPOS(BasicAutomationElementBase basicAutomationElement) : base(basicAutomationElement)
         {
-        }
-        
-        
+        }       
         //
         // Summary:
         //Возвращает строки грида списком
@@ -44,9 +42,33 @@ namespace HelloAT.pos.FormElements
             }
            
             return result;
-
         }
+        //
+        // Summary:
+        //Возвращает строку грида по номеру столбца и содержимому ячейки
+        public GridRow getRowByColumnNumber(int columnNumber, string cellContent)
+        {
+            GridRow result = this.FindFirstByXPath($"//Header//").AsGridRow();//выводим HEADER, если содержимое не найдено
+            //string xpathOfColumnName = $"//Header//HeaderItem[{columnNumber + 1}]";
 
+            string xpathOfCell = $"//DataItem//Custom[{columnNumber}]";
+            for (int i = 0; i < this.Patterns.Grid.Pattern.RowCount; )
+            {
+                try
+                {
+                    if (this.FindFirstByXPath(xpathOfCell).AsLabel().Text.Contains(cellContent))
+                    {
+                        return this.FindFirstByXPath(xpathOfCell).FindFirstDescendant().AsGridRow();
+                    }
+                }
+                catch
+                { }
+            }
+
+
+            //string xpath = $"//DataItem//Custom[{columnNumber}]//Text[@Name='{cellContent}']";
+            return result;
+        }
     }
 
 }
