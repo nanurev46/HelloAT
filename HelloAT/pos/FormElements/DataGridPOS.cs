@@ -17,7 +17,14 @@ namespace HelloAT.pos.FormElements
     {
         public DataGridPOS(BasicAutomationElementBase basicAutomationElement) : base(basicAutomationElement)
         {
-        }       
+        }
+        //
+        // Summary:
+        //Возвращает хедер
+        public GridHeader getHeader()
+        {
+            return this.FindFirstByXPath($"//Header//").AsGridHeader();
+        }
         //
         // Summary:
         //Возвращает строки грида списком
@@ -46,19 +53,23 @@ namespace HelloAT.pos.FormElements
         //
         // Summary:
         //Возвращает строку грида по номеру столбца и содержимому ячейки
-        public GridRow getRowByColumnNumber(int columnNumber, string cellContent)
+        public DataGridViewRow getRowByColumnNumber(int columnNumber, string cellContent)
         {
-            GridRow result = this.FindFirstByXPath($"//Header//").AsGridRow();//выводим HEADER, если содержимое не найдено
+            DataGridViewRow result = null;//выводим HEADER, если содержимое не найдено
             //string xpathOfColumnName = $"//Header//HeaderItem[{columnNumber + 1}]";
 
-            string xpathOfCell = $"//DataItem//Custom[{columnNumber}]";
-            for (int i = 0; i < this.Patterns.Grid.Pattern.RowCount; )
+            string xpathOfCell;
+            string s;
+            for (int i = 0; i < this.Patterns.Grid.Pattern.RowCount; i++)
             {
                 try
                 {
+                    xpathOfCell = $"//DataItem[{i+1}]//Custom[{columnNumber}]";
+                    s = FindFirstByXPath(xpathOfCell).AsLabel().Text;
                     if (this.FindFirstByXPath(xpathOfCell).AsLabel().Text.Contains(cellContent))
                     {
-                        return this.FindFirstByXPath(xpathOfCell).FindFirstDescendant().AsGridRow();
+                        //return this.FindFirstByXPath(xpathOfCell).FindFirstDescendant().AsGridRow();
+                        return this.AsDataGridView().Rows[i];
                     }
                 }
                 catch

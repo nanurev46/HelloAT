@@ -42,7 +42,20 @@ namespace HelloAT.pos.forms
         {
             //if (!getRowByName(user).IsOffscreen) { users.Patterns.Scroll.Pattern.Scroll(0, FlaUI.Core.Definitions.ScrollAmount.LargeIncrement); }
 
-            operatorsDataGrid.getRowByColumnNumber(2, partOfOperatorsName).DoubleClick();
+            //operatorsDataGrid.getRowByColumnNumber(2, partOfOperatorsName).DoubleClick();
+            // DataGridViewRow row = operatorsDataGrid.getRowByColumnNumber(2, partOfOperatorsName);
+            //row.Patterns.ScrollItem.Pattern.ScrollIntoView();
+
+
+
+            DataGridViewRow row = operatorsDataGrid.getRowByColumnNumber(2, "Боровкова");
+            row.Patterns.ScrollItem.Pattern.ScrollIntoView();
+
+            row = operatorsDataGrid.getRowByColumnNumber(2, partOfOperatorsName);
+            row.Patterns.ScrollItem.Pattern.ScrollIntoView();
+            //if (flag) { operatorsDataGrid.Patterns.Scroll.Pattern.SetScrollPercent(-1, 100); }
+            row.Click();
+
         }
 
     }
