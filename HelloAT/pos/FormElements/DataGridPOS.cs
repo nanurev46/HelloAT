@@ -32,7 +32,10 @@ namespace HelloAT.pos.FormElements
         {
             List<List<string>> result = new List<List<string>>();
 
-            //формируем список опрераторов класса listOperators из грида
+            this.AsVerticalScrollBar().Patterns.Scroll.Pattern.SetScrollPercent(-1, -1);//скроллим грид вверх до упора
+                                                                                        //формируем список опрераторов класса listOperators из грида        
+
+            /*
             for (int i = 0; i < this.AsDataGridView().Patterns.Grid.Pattern.RowCount; i++)
             {
                 result.Add(new List<string>());
@@ -45,10 +48,37 @@ namespace HelloAT.pos.FormElements
 
                         result[i].Add(l.Text);
                     }
-                    catch { }
+                    catch {  }
             }
-           
-            return result;
+           */
+
+            //формируем список опрераторов класса listOperators из грида
+            try
+            {
+                this.AsDataGridView().FindFirstByXPath($"//DataItem[1]").AsGridRow().Click();//кликаем по 1 строке грида
+                for (int i = 0; i < this.AsDataGridView().Patterns.Grid.Pattern.RowCount; i++)
+                {
+                    if (this.AsDataGridView().FindFirstByXPath($"//DataItem[{i}]").AsGridRow().IsSelected)//ищем выбранную строку в гриде
+                    {
+                        result.Add(new List<string>());
+                        for (int j = 0; j < this.AsDataGridView().FindAllByXPath($"//DataItem[" + (i + 1) + "]//Custom").Count(); j++)//идем по столбцам выделенной строки
+                        {
+                            try
+                            {
+                                Label l = this.AsDataGridView().FindFirstByXPath($"//DataItem[" + (i + 1) + "]//Custom[" + j + "]//Text").AsLabel();
+
+                                result[i].Add(l.Text);
+                            }
+                            catch { }
+                        }
+                    }
+                }               
+                //БУДЕТ РАБОТАТЬ, ЕСЛИ В ПУСТОЙ ЯЧЕЙКЕ БУДЕТ СОДЕРЖАТЬСЯ ЭЛЕМЕНТ text
+            }
+            catch { }
+
+
+               return result;
         }
         //
         // Summary:
