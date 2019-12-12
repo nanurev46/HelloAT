@@ -10,6 +10,8 @@ using FlaUI.Core.AutomationElements.Infrastructure;
 using FlaUI.Core.AutomationElements.Scrolling;
 using FlaUI.Core.Patterns;
 using FlaUI.Core;
+using FlaUI.Core.Input;
+using FlaUI.Core.WindowsAPI;
 
 namespace HelloAT.pos.FormElements
 {
@@ -32,53 +34,57 @@ namespace HelloAT.pos.FormElements
         {
             List<List<string>> result = new List<List<string>>();
 
-            this.AsVerticalScrollBar().Patterns.Scroll.Pattern.SetScrollPercent(-1, -1);//скроллим грид вверх до упора
-                                                                                        //формируем список опрераторов класса listOperators из грида        
+            //если грид пустой - вовзращаем пустой список
+            if (this.AsDataGridView().Patterns.Grid.Pattern.RowCount == 0)
+            { return result; }
 
-            /*
-            for (int i = 0; i < this.AsDataGridView().Patterns.Grid.Pattern.RowCount; i++)
+            //формируем список опрераторов класса listOperators из грида        
+            if (this.AsDataGridView().Patterns.Scroll.Pattern.VerticalViewSize == 100)//если все строки грида поместились на форме и не надо скролить
             {
-                result.Add(new List<string>());
-
-                for (int j = 0; j < this.AsDataGridView().FindAllByXPath($"//DataItem[" + (i + 1) + "]//Custom").Count(); j++)
-                    //БУДЕТ РАБОТАТЬ, ЕСЛИ В ПУСТОЙ ЯЧЕЙКЕ БУДЕТ СОДЕРЖАТЬСЯ ЭЛЕМЕНТ text
-                    try
-                    {
-                        Label l = this.AsDataGridView().FindFirstByXPath($"//DataItem[" + (i + 1) + "]//Custom[" + j + "]//Text").AsLabel();
-
-                        result[i].Add(l.Text);
-                    }
-                    catch {  }
-            }
-           */
-
-            //формируем список опрераторов класса listOperators из грида
-            try
-            {
-                this.AsDataGridView().FindFirstByXPath($"//DataItem[1]").AsGridRow().Click();//кликаем по 1 строке грида
                 for (int i = 0; i < this.AsDataGridView().Patterns.Grid.Pattern.RowCount; i++)
                 {
-                    if (this.AsDataGridView().FindFirstByXPath($"//DataItem[{i}]").AsGridRow().IsSelected)//ищем выбранную строку в гриде
+                    result.Add(new List<string>());
+
+                    for (int j = 0; j < this.AsDataGridView().FindAllByXPath($"//DataItem[{i+1}]//Custom").Count(); j++)
+                        //БУДЕТ РАБОТАТЬ, ЕСЛИ В ПУСТОЙ ЯЧЕЙКЕ БУДЕТ СОДЕРЖАТЬСЯ ЭЛЕМЕНТ text
+                        try
+                        {
+                            Label l = this.AsDataGridView().FindFirstByXPath($"//DataItem[{i + 1}]//Custom[{j}]//Text").AsLabel();
+
+                            result[i].Add(l.Text);//записываем содержимое ячеек j-й строки
+                        }
+                        catch { }
+                }
+            }
+            else //если надо скроллить
+            {
+
+                    this.AsDataGridView().Patterns.Scroll.Pattern.SetScrollPercent(-1, 0);//скроллим грид вверх до упора
+                    this.AsDataGridView().FindFirstByXPath($"//DataItem[1]").AsGridRow().Click();//кликаем по 1 строке грида
+                    int i = 0;
+                    //int flag = 0;
+                    while (i < this.AsDataGridView().Patterns.Grid.Pattern.RowCount)
+                    //for (int i = 0; i < this.AsDataGridView().Patterns.Grid.Pattern.RowCount; i++)
                     {
                         result.Add(new List<string>());
-                        for (int j = 0; j < this.AsDataGridView().FindAllByXPath($"//DataItem[" + (i + 1) + "]//Custom").Count(); j++)//идем по столбцам выделенной строки
+                        for (int j = 0; j < this.AsDataGridView().FindAllByXPath($"//DataItem[{i + 1}]//Custom").Count(); j++)//идем по столбцам выделенной строки
                         {
-                            try
-                            {
-                                Label l = this.AsDataGridView().FindFirstByXPath($"//DataItem[" + (i + 1) + "]//Custom[" + j + "]//Text").AsLabel();
-
-                                result[i].Add(l.Text);
-                            }
-                            catch { }
+                            //БУДЕТ РАБОТАТЬ, ЕСЛИ В ПУСТОЙ ЯЧЕЙКЕ БУДЕТ СОДЕРЖАТЬСЯ ЭЛЕМЕНТ text
+                                Label l = this.AsDataGridView().FindFirstByXPath($"//DataItem[{i + 1}]//Custom[{j}]//Text").AsLabel();
+                                result[i].Add(l.Text);//записываем содержимое ячеек j-й строки
+                            
+                            //if (this.Patterns.Scroll.Pattern.VerticalScrollPercent < 100) { flag++; }
                         }
+                        Keyboard.Press(VirtualKeyShort.DOWN);
+                        i++;
                     }
-                }               
-                //БУДЕТ РАБОТАТЬ, ЕСЛИ В ПУСТОЙ ЯЧЕЙКЕ БУДЕТ СОДЕРЖАТЬСЯ ЭЛЕМЕНТ text
+
             }
-            catch { }
+
+            //формируем список опрераторов класса listOperators из грида
 
 
-               return result;
+            return result;
         }
         //
         // Summary:

@@ -46,6 +46,7 @@ namespace HelloAT.pos.forms
             // DataGridViewRow row = operatorsDataGrid.getRowByColumnNumber(2, partOfOperatorsName);
             //row.Patterns.ScrollItem.Pattern.ScrollIntoView();
 
+            List<List<String>> l = this.operatorsDataGrid.getRowsAsList();
 
 
             DataGridViewRow row = operatorsDataGrid.getRowByColumnNumber(2, "Боровкова");
