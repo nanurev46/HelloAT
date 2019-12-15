@@ -18,7 +18,7 @@ namespace HelloAT.pos.forms
     {
         public Window window { get; set; }
         public DataGridPOS operatorsDataGrid { get; set; } //grid со списком операторов
-        public List<Operator> listOperators { get; }    //список операторов класса listOperators
+        //public List<Operator> listOperators { get; }    //список операторов класса listOperators
 
         public SelectOperatorForm(Window window)
         {
@@ -26,6 +26,7 @@ namespace HelloAT.pos.forms
             window.Focus();
             
             this.operatorsDataGrid = new DataGridPOS (window.FindFirstByXPath($"//Custom//DataGrid").AsDataGridView().BasicAutomationElement);
+            /*
             this.listOperators = new List<Operator>();
 
             List<List<string>> operatorListFromGrid = this.operatorsDataGrid.getRowsAsList();
@@ -33,6 +34,7 @@ namespace HelloAT.pos.forms
             {
                 this.listOperators.Add(new Operator(operatorListFromGrid[i][0], operatorListFromGrid[i][1]));
             }
+            */
 
         }
         //
